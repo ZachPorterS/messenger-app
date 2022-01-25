@@ -7,6 +7,7 @@ import { auth } from '../firebase';
 const AuthContext = react.createContext();
 
 export const useAuth = () => useContext(AuthContext);
+
 export const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
@@ -16,11 +17,12 @@ export const AuthProvider = ({children}) => {
         auth.onAuthStateChanged((user) => {
             setUser(user);
             setLoading(false);
-            if (user) history.push('./Chats');
-        });
+            if (user) history.push('./chats');
+        })
     }, [user, history]);
 
-    const value = { user };
+    const value = {user};
+
     return (
         <AuthContext.Provider value={value}>
             {!loading && children}
